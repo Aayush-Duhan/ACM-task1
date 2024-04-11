@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACM VITC Welcome Page</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #000; /* Solid black background */
+        }
+
+        .container h1, .container h1 span {
+            margin: 0;
+            padding: 0;
+            color: #ffffff; /* White text for contrast */
+            font-size: 2em; /* Adjust based on your design */
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to</h1>
+        <h1 id="acmVitc">ACM<span> </span>VITC</h1>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const target = document.getElementById('acmVitc');
+            // Split "ACM VITC" correctly, preserving the space
+            const chars = target.textContent.split('').map(char => char === ' ' ? '<span class="space"> </span>' : `<span>${char}</span>`);
+            target.innerHTML = chars.join('');
+
+            // Animate "Welcome to"
+            gsap.fromTo(".container h1:first-child", {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: "power3.out"});
+
+            // Animate each character in "ACM VITC"
+            gsap.from("#acmVitc span", {
+                duration: 1,
+                opacity: 0,
+                stagger: 0.05,
+                y: "-20px",
+                ease: "elastic.out(1, 0.3)",
+                delay: 1
+            });
+
+            // Transition to index.html
+            setTimeout(() => {
+                gsap.to(".container", {
+                    duration: 1,
+                    opacity: 0,
+                    y: -100,
+                    ease: "power2.in",
+                    onComplete: () => window.location.href = "index.html"
+                });
+            }, 6000); // Adjust timing as necessary
+        });
+    </script>
+</body>
+</html>
